@@ -54,11 +54,11 @@ const EmployeeDetail = (props) => {
     useEffect(() => {
         axios.get(Globalsettings.url + 'api/admin/employees/show/' + props.match.params.id + '/' + companyid)
             .then((response) => {
-                setallowedLeaves((response.data.allowedLeaves))
+                setallowedLeaves(response.data.allowedLeaves)
 
-                setemployeeId((response.data.data.employeeDetail.employee_id))
-                setemployeeMobile((response.data.data.employee.mobile))
-                setemployeeImg((response.data.data.employee.image_url))
+                setemployeeId(response.data.data.employeeDetail.employee_id)
+                setemployeeMobile(response.data.data.employee.mobile)
+                setemployeeImg(response.data.data.employee.image_url)
                 setemployeeName(response.data.data.employee.name)
                 setemployeeEmail(response.data.data.employee.email)
                 setemployeeAddress(response.data.data.employeeDetail.address)
@@ -143,7 +143,7 @@ const EmployeeDetail = (props) => {
                                                                     <img src={employeeImg} alt="user" class="img-circle avatar"/>
                                                                 </div>
                                                                 <div class="sl-right">
-                                                                    <div class="m-l-40"><a href="#" class="text-info">{employeeName}</a> <span  class="sl-date"><ReactTimeAgo date={val.created_at} locale="en-US"/></span>
+                                                                    <div class="m-l-40"><a href="#" class="text-info">{employeeName}</a> <span  class="sl-date">{val.created_at}</span>
                                                                         <p>{val.activity}</p>
                                                                     </div>
                                                                 </div>
@@ -261,15 +261,7 @@ const EmployeeDetail = (props) => {
                                     <TabPanel>
                                         <div className="card card-body vh-100">
                                             <div className="d-flex align-items-center mb-4">
-                                                <div className="d-flex align-items-center">
-                                                    <label className="w-100px blackcolortext fontsize16 fontweightregular">Show</label>
-                                                    <select className="form-control transparent_form">
-                                                        <option>10</option>
-                                                        <option>20</option>
-                                                        <option>30</option>
-                                                    </select>
-                                                    <label className="w-100px ml-3 blackcolortext fontsize16 fontweightregular">Entries</label>
-                                                </div>
+                              
                                                 <div className="ml-auto">
                                                     <form className="transparent_form">
                                                         <InputGroup>

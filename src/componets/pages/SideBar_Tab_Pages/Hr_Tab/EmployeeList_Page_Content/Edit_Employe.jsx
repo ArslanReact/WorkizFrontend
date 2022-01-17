@@ -209,7 +209,7 @@ const Edit_Employe = (props) => {
                         </div>
                         <div className="col-xl-3 col-lg-12 mb-4">
                             <Form.Label className="mb-2 ">Exit Date</Form.Label>
-                            <Form.Control className="h-45px transparent_form" type="date" value={dox} onChange={e => setdox(e.target.value)} />
+                            <Form.Control className="h-45px transparent_form" type="date" value={dox} name="dox" onChange={e => setdox(e.target.value)} />
                         </div>
                         <div className="col-xl-3 col-lg-12 mb-4">
                             <Form.Label className="mb-2 ">Gender </Form.Label>

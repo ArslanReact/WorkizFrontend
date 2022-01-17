@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { InputGroup, Button, Form, FormControl } from "react-bootstrap";
 import DOMPurify from 'dompurify';
 import LoadingOverlay from 'react-loading-overlay';
+import dateFormat from "dateformat";
 import { ToastContainer, toast } from 'react-toastify';
 //
 import "react-google-flight-datepicker/dist/main.css";
@@ -111,12 +112,14 @@ const Attendance = () => {
             sethalfday(response.data.halfDays);
             setdaysabsent(response.data.absentDays);
             setholidays(response.data.holidays);
+            setStartDate(dateFormat(response.data.startDate, 'yyyy-mm-dd'));
+            setEndDate(dateFormat(response.data.endDate, 'yyyy-mm-dd'));
             setLoading(false);
         });
 
         axios.get(Globalsettings.url + 'api/admin/attendances/employeeData/'+companyid+'/'+userid,{
-            StartDate: StartDate,
-            EndDate: EndDate,
+            startDate: StartDate,
+            endDate: EndDate,
             attuser: attuser
         })
         .then((response) => {
@@ -128,8 +131,8 @@ const Attendance = () => {
     const attandancebyuser = () => {
         setLoading(true);
         axios.post(Globalsettings.url + 'api/admin/attendances/refresh-count/'+companyid+'/'+userid,{
-            StartDate: StartDate,
-            EndDate: EndDate,
+            startDate: StartDate,
+            endDate: EndDate,
             attuser: attuser
         })
         .then((response) => {
@@ -139,13 +142,15 @@ const Attendance = () => {
             sethalfday(response.data.halfDays);
             setdaysabsent(response.data.absentDays);
             setholidays(response.data.holidays);
+            setStartDate(dateFormat(response.data.startDate, 'yyyy-mm-dd'));
+            setEndDate(dateFormat(response.data.endDate, 'yyyy-mm-dd'));
             setLoading(false);
         });
 
 
         axios.get(Globalsettings.url + 'api/admin/attendances/employeeData/'+companyid+'/'+userid,{
-            StartDate: StartDate,
-            EndDate: EndDate,
+            startDate: StartDate,
+            endDate: EndDate,
             attuser: attuser
         })
         .then((response) => {

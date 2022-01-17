@@ -226,7 +226,7 @@ const EmployeeList = () => {
                                             online_offline_color="greencolorbg"
                                             title={val.name}
                                             badgetext={val.designation_name}
-                                            email={val.email}
+                                            email={val.email == '' ? 'n/a' : val.email}
                                             statusbadge={val.status === 'active' ? 'Active' : 'Inactive'}
                                             statusbadgecolor={val.status === 'active' ? "badgegreenbg greencolortext" : "badgeredbg redcolortext"}
                                             canchangethis={val.status === 'active' ? 'yes' : 'no'}

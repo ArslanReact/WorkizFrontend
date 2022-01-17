@@ -4,6 +4,7 @@ import Globalsettings from "../../../../Globalsettings";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { FormLabel, Button, Modal, Form } from "react-bootstrap";
+import LoadingOverlay from 'react-loading-overlay';
 
 // 
 import DataTableLoopModalOne from "../../Hr_Tab/Leaves_Page_Content/DataTableLoopModalOne";
@@ -13,6 +14,7 @@ import activityicon from "../../../../../assets/images/activityicon.svg";
 import calendaricon from "../../../../../assets/images/calendaricon.svg";
 
 const Assign_Leaves = (props) => {
+    const [isLoading, setLoading] = useState(false);
     const [modalShowLeaveType, setModalShowLeaveType] = React.useState(false);
     const [leavetypeInput, setleavetypeInput] = useState('');
     const [noofleave, setnoofleave] = useState('');
@@ -50,6 +52,7 @@ const Assign_Leaves = (props) => {
     }, [companyid])
     //Insert Employee
     const HandleSubmit = (evt) => {
+        setLoading(true);
         const data = new FormData();
         data.append('user_id', member);
         data.append('leave_type_id', leavetype);
@@ -60,9 +63,10 @@ const Assign_Leaves = (props) => {
         data.append('status', status);
         axios.post(Globalsettings.url + 'api/admin/leaves/store', data).then(response => {
             toast.success("Leave Assign Successfully!");
-            history.push('/leaves')
-        }).catch(function (error) {
-            history.push('/signin')
+            setLoading(false);
+            setTimeout(() => { 
+                history.push(`${process.env.PUBLIC_URL}/leaves`);
+            }, 3000);
         });
         evt.preventDefault();
     }
@@ -100,6 +104,7 @@ const Assign_Leaves = (props) => {
     return (
         <>
             <ToastContainer />
+            <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <div className="container-fluid top-boxes mb-4">
                 <div className="d-block d-xl-flex align-items-center">
                     <h4 className="main_title d-flex mb-3 mb-xl-0"> Leaves </h4>
@@ -139,18 +144,16 @@ const Assign_Leaves = (props) => {
                             </div>
                             <div className="col-xl-6 col-lg-12 mb-4">
                                 <FormLabel className="mb-3">Select Duration </FormLabel>
-                                <div className="form-group justify-content-between d-flex">
-                                    <div className="form-check-inline d-flex align-items-center">
-                                        <Form.Check type="radio" name="radio1" value="single" checked={duration === "single"} onChange={onValueChange} required className="p-0 d-flex align-items-center" />
-                                        <FormLabel className="fontsize16 fontweightregular">Single </FormLabel>
+                                <div className="form-group d-flex">
+                                    <div className="form-check-inline d-flex align-items-center ms-4 me-0">
+                                        <Form.Check type="radio" name="radio1" value="single" checked={duration === "single"} label="Single" onChange={onValueChange} required className="p-0 d-flex align-items-center" />
                                     </div>
-                                    <div className="form-check-inline d-flex align-items-center">
+                                    {/* <div className="form-check-inline d-flex align-items-center">
                                         <Form.Check type="radio" name="radio1" value="multiple" checked={duration === "multiple"} onChange={onValueChange} required className="p-0 d-flex align-items-center" />
                                         <FormLabel className="fontsize16 fontweightregular">Multiple </FormLabel>
-                                    </div>
-                                    <div className="form-check-inline d-flex align-items-center">
-                                        <Form.Check type="radio" name="radio1" value="half day" checked={duration === "half day"} onChange={onValueChange} required className="p-0 d-flex align-items-center" />
-                                        <FormLabel className="fontsize16 fontweightregular">Half Day </FormLabel>
+                                    </div> */}
+                                    <div className="form-check-inline d-flex align-items-center ms-4 ps-4">
+                                        <Form.Check type="radio" name="radio1" value="half day" label="Half Day" checked={duration === "half day"} onChange={onValueChange} required className="p-0 d-flex align-items-center" />
                                     </div>
                                 </div>
                             </div>
