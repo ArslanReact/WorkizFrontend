@@ -50,6 +50,7 @@ import Header from "./componets/Header";
 import Footer from "./componets/Footer";
 import Error from "./componets/Error";
 import AProfile from "./componets/AProfile";
+import AViewAllNotification from "./componets/AViewAllNotification";
 // ==========Dashboard dromdown pages==========
 import Signin from "./componets/Signin";
 import Signup from "./componets/Signup";
@@ -66,6 +67,7 @@ import Add_New_ClientFromLead from "./componets/pages/SideBar_Tab_Pages/Cutomer_
 import Edit_Client from "./componets/pages/SideBar_Tab_Pages/Cutomer_Tab/Client_Page_content/Edit_Client";
 import Profile from "./componets/client/Profile";
 import ViewAllNotification from "./componets/client/ViewAllNotification";
+
 
 import Leads from "./componets/pages/SideBar_Tab_Pages/Cutomer_Tab/Leads_Page_Content/Leads";
 import Leads_View from "./componets/pages/SideBar_Tab_Pages/Cutomer_Tab/Leads_Page_Content/Leads_View";
@@ -154,6 +156,7 @@ import Invoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Pa
 import RecurringInvoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/RecurringInvoice";
 import CreateLogTimeInvoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/CreateLogTimeInvoice";
 import AddInvoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/AddInvoice";
+import AddRecuringInvoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/AddRecuringInvoice";
 import InvoicePage from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/InvoicePage";
 import EditInvoice from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/EditInvoice";
 import AddPayment from "./componets/pages/SideBar_Tab_Pages/Finance_Tab/Invoices_Page_Content/AddPayment";
@@ -311,6 +314,7 @@ function App() {
               {/* Website Route */}
                 <WebLayout exact path={`${process.env.PUBLIC_URL}/`} component={Home}></WebLayout>
                 <WebLayout path={`${process.env.PUBLIC_URL}/pricing`} component={Pricing}></WebLayout>
+                
                 <WebLayout path={`${process.env.PUBLIC_URL}/demo`} component={Demo}></WebLayout>
                 <WebLayout path={`${process.env.PUBLIC_URL}/reviews`} component={Reviews}></WebLayout>
                 <WebLayout path={`${process.env.PUBLIC_URL}/blog`} component={Blog}></WebLayout>
@@ -341,6 +345,7 @@ function App() {
               <DashLayout exact path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
               <DashLayout exact path={`${process.env.PUBLIC_URL}/signup`} component={Signup} />
               <DashLayout exact path={`${process.env.PUBLIC_URL}/forgot`} component={Forgot} />
+              <DashLayout path={`${process.env.PUBLIC_URL}/aviewallnotification`} component={AViewAllNotification}></DashLayout>
               <DashLayout exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Dashboard} />
               <DashLayout path={`${process.env.PUBLIC_URL}/finance-dashboard`} component={FinanceDasboard} />
               {/* ==========cutomer dromdown pages========== */}
@@ -431,6 +436,7 @@ function App() {
               <DashLayout path={`${process.env.PUBLIC_URL}/recurring_invoice`} component={RecurringInvoice} />
               <DashLayout path={`${process.env.PUBLIC_URL}/create_log_time_invoice`} component={CreateLogTimeInvoice} />
               <DashLayout path={`${process.env.PUBLIC_URL}/add_invoice`} component={AddInvoice} />
+              <DashLayout path={`${process.env.PUBLIC_URL}/add_recuringinvoice`} component={AddRecuringInvoice} />
               <DashLayout path={`${process.env.PUBLIC_URL}/invoice_page`} component={InvoicePage} />
               <DashLayout path={`${process.env.PUBLIC_URL}/edit_invoice`} component={EditInvoice} />
               <DashLayout path={`${process.env.PUBLIC_URL}/add_payment`} component={AddPayment} />

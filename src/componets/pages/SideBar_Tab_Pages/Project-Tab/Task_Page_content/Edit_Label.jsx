@@ -21,10 +21,10 @@ const Create_Label = (props) => {
         setLoading(true);
         axios.get(Globalsettings.url + 'api/admin/tasklabel/edit/'+props.match.params.id)
             .then((response) => {
-                setname(response.data.taskLabel.label_name);
-                setdesc(response.data.taskLabel.description);
-                setcolorbox(response.data.taskLabel.color);
-                setlabelid(response.data.taskLabel.id);
+                setname(response.data.tasklabel.label_name);
+                setdesc(response.data.tasklabel.description);
+                setcolorbox(response.data.tasklabel.color);
+                setlabelid(response.data.tasklabel.id);
                 setLoading(false);
             })
             .catch((error) => {
@@ -40,8 +40,11 @@ const Create_Label = (props) => {
             color: colorbox,
             company_id: companyid,
         }).then((response) => {
+            toast.success("Task Label Successfully Updated!");
             setLoading(false);
-            history.push(`${process.env.PUBLIC_URL}/task_label`);
+            setTimeout(() => { 
+                history.push(`${process.env.PUBLIC_URL}/task_label`);
+            }, 3000);
         })
         .catch((error) => {
             setLoading(true);
@@ -54,7 +57,7 @@ const Create_Label = (props) => {
                 <ToastContainer />
         <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <div className="container-fluid mb-4">
-                <h4 className="main_title">Create Label</h4>
+                <h4 className="main_title">Update Label</h4>
             </div>
             {/*  */}
             <div className="container-fluid mb-4">

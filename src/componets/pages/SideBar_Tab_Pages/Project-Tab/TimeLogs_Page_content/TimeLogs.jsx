@@ -19,11 +19,12 @@ import $ from "jquery";
 import LoadingOverlay from 'react-loading-overlay';
 import { ToastContainer, toast } from 'react-toastify';
 import swal from 'sweetalert';
-
+import dateFormat from 'dateformat';
 const TimeLogs = (props) => {
     var counter2 = -1;
     const history = useHistory();
     const [EditTask, setEditTask] = React.useState(false);
+    const [EditModal, setEditModal] = React.useState(false);
     const [isLoading, setLoading] = useState(true);
     const [projectid, setprojectid] = useState('');
     const [taskid, settaskid] = useState('');
@@ -33,6 +34,17 @@ const TimeLogs = (props) => {
     const [starttime, setstarttime] = useState('');
     const [endtime, setendtime] = useState('');
     const [memo, setmemo] = useState('');
+
+    const [timelogupdateid, settimelogupdateid] = useState('');
+    const [uprojectid, setuprojectid] = useState('');
+    const [utaskid, setutaskid] = useState('');
+    const [uempid, setuempid] = useState('');
+    const [ustartdate, setustartdate] = useState('');
+    const [uenddate, setuenddate] = useState('');
+    const [ustarttime, setustarttime] = useState('');
+    const [uendtime, setuendtime] = useState('');
+    const [umemo, setumemo] = useState('');
+
     const [ProjectsData, setProjectsData] = useState({
         ProjectsData_Array: []
     });
@@ -53,15 +65,17 @@ const TimeLogs = (props) => {
     const [TimeLogTables, setTimeLogTable] = useState({
         TimeLogTableArray: []
     });
+    const [CurrencyData, setCurrencyData] = useState('');
     // get company id from session
     let obj = JSON.parse(localStorage.getItem('data'));
     var companyid = obj.company_id;
     var uid = obj.id;
     useEffect(() => {
-        axios.get(Globalsettings.url + 'api/admin/all-time-logs/' + companyid)
+        axios.get(Globalsettings.url + 'api/admin/all-time-logs/' + companyid+'/'+uid)
             .then((response) => {
                 setLoading(false)
-                setTimeLogTable({ TimeLogTableArray: response.data.data ? response.data.data : [], });
+                setTimeLogTable({ TimeLogTableArray: response.data.data.timelogs ? response.data.data.timelogs : [], });
+                setCurrencyData(response.data.data.currencydata.currency_symbol);
             })
             .catch((error) => {
                 // history.push('/signin');
@@ -69,7 +83,7 @@ const TimeLogs = (props) => {
     }, []);
     const addtimelog = () => {
         setLoading(false);
-        axios.get(Globalsettings.url + 'api/admin/all-time-logs/create/' + companyid)
+        axios.get(Globalsettings.url + 'api/admin/all-time-logs/create/' + companyid+'/'+uid)
         .then((response) => {
             setEditTask(true);
             setLoading(false);
@@ -98,8 +112,8 @@ const TimeLogs = (props) => {
         if (search) {
             tabledata = tabledata.filter(
                 comment =>
-                    comment.project_name.toLowerCase().includes(search.toLowerCase())||
-                    comment.name.toLowerCase().includes(search.toLowerCase())
+                    comment.task.heading.toLowerCase().includes(search.toLowerCase())||
+                    comment.project.project_name.toLowerCase().includes(search.toLowerCase())
             );
         }
 
@@ -122,6 +136,33 @@ const TimeLogs = (props) => {
 
     }, [TimeLogTables.TimeLogTableArray, currentPage, search, sorting]);     
 
+        // Edit Time Log
+        const EditTimeLog = (id) => {
+            setLoading(true);
+            axios.get(Globalsettings.url + 'api/admin/all-time-logs/edit/'+companyid+'/'+uid+'/'+ id)
+            .then((response) => {
+                setEditModal(true);
+                setProjectsData({ ProjectsData_Array: response.data.data.projects ? response.data.data.projects : [], });
+                setTaskData({ TaskData_Array: response.data.data.tasks ? response.data.data.tasks : [], });
+                setEmpData({ EmpData_Array: response.data.data.employees ? response.data.data.employees : [], });
+                settimelogupdateid(response.data.data.timeLog.id);
+                setuprojectid(response.data.data.timeLog.project_id);
+                setutaskid(response.data.data.timeLog.task_id);
+                setuempid(response.data.data.timeLog.user_id);
+                setumemo(response.data.data.timeLog.memo);
+                setustartdate(dateFormat(response.data.data.timeLog.start_time,'yyyy-mm-dd'));
+                setuenddate(dateFormat(response.data.data.timeLog.end_time,'yyyy-mm-dd'));
+                setustarttime(dateFormat(response.data.data.timeLog.start_time,'hh:mm:ss'));
+                setuendtime(dateFormat(response.data.data.timeLog.end_time,'hh:mm:ss'));
+                setLoading(false);
+
+            })
+            .catch((error) => {
+                toast.error("something went wrong");
+                setLoading(false);
+            });
+            
+        }
         // Delete Time Log
         const DeleteTimeLog = (id) => {
             swal({
@@ -133,7 +174,7 @@ const TimeLogs = (props) => {
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        axios.get(Globalsettings.url + 'api/admin/all-time-logs/destroy/' + id)
+                        axios.get(Globalsettings.url + 'api/all-time-logs/destroy/' + id)
                             .then(response => {
                                 swal("Time Log Delete Successfully!", {
                                     icon: "success",
@@ -189,6 +230,28 @@ const TimeLogs = (props) => {
         data.append('memo', memo);
         axios.post(Globalsettings.url + 'api/admin/all-time-logs/time-logs/store/' + companyid+'/'+uid, data).then((response) => {
             toast.success("Time Log Added Successfully!");
+            setLoading(false);
+            setEditTask(false);
+            setTimeout(() => { 
+                window.location.reload();
+            }, 3000)
+        });
+        evt.preventDefault();
+    }     
+    // Submit
+    const SubmitUpdateTimeLog = (evt) => {
+        setLoading(true);
+        const data = new FormData();
+        data.append('project_id', uprojectid);
+        data.append('task_id', utaskid);
+        data.append('user_id', uempid);
+        data.append('start_date', ustartdate);
+        data.append('end_date', uenddate);
+        data.append('start_time', ustarttime);
+        data.append('end_time', uendtime);
+        data.append('memo', umemo);
+        axios.post(Globalsettings.url + 'api/admin/all-time-logs/update/' + companyid+'/'+uid+'/'+timelogupdateid, data).then((response) => {
+            toast.success("Time Log Updated Successfully!");
             setLoading(false);
             setEditTask(false);
             setTimeout(() => { 
@@ -292,15 +355,16 @@ const TimeLogs = (props) => {
                                         key={index}
                                         timelogid={val.id}
                                         serialnumber={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
-                                        taskname={val.project_name}
+                                        taskname={val.task.heading}
                                         employetitle={val.name}
                                         starttime={val.start_time}
                                         enddate={val.end_time}
                                         status={val.status}
-                                        price={val.earnings}
+                                        price={CurrencyData+""+val.total_hours * val.hourly_rate}
                                         hrscount={val.hours}
                                         DeleteTimeLog={DeleteTimeLog}
                                         ApproveTimeLog={ApproveTimeLog}
+                                        EditTimeLog={EditTimeLog}
 
                                     />
                                 )
@@ -396,7 +460,7 @@ const TimeLogs = (props) => {
                             <div className="col-xl-4 col-lg-12 mb-3">
                                 <div className="form-group">
                                     <FormLabel className="mb-2">Total Hours</FormLabel>
-                                    <p className="m-0" id="total_time">0Hrs 0Mins</p>
+                                    <p className="m-0" id="total_time"></p>
                                 </div>
                             </div>
                             <div className="col-xl-12 col-lg-12 mb-3">
@@ -415,6 +479,101 @@ const TimeLogs = (props) => {
             </Modal.Footer>
             </Form>
         </Modal>
+
+
+
+
+            <Modal show={EditModal} onHide={() => setEditModal(false)} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
+                <Modal.Header closeButton className="d-flex align-items-center p-0">
+                    <Modal.Title id="contained-modal-title-vcenter">Update Time Logs</Modal.Title>
+                </Modal.Header>
+                <Form onSubmit={SubmitUpdateTimeLog}>
+                <Modal.Body className="p-0 my-4">
+                   
+                        <div className="row">
+                            <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Select Project*</FormLabel>
+                                        <Form.Control className="transparent_form fontsize14 h-45px" as="select" required value={uprojectid} onChange={e => setuprojectid(e.target.value)}>
+                                        <option value="">Select Project</option>
+                                        {ProjectsData.ProjectsData_Array.map((val, index) => {
+                                            return (
+                                                <option value={val.id} key={index}>{val.project_name}</option>
+                                            )
+                                        })}
+                                        </Form.Control>
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Select Task*</FormLabel>
+                                        <Form.Control className="transparent_form fontsize14 h-45px" as="select" required value={utaskid} onChange={e => setutaskid(e.target.value)}>
+                                            <option value="">Select Task</option>
+                                            {TaskData.TaskData_Array.map((val, index) => {
+                                                return (
+                                                    <option value={val.id} key={index}>{val.heading}</option>
+                                                )
+                                            })}
+                                        </Form.Control>
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Employee Name*</FormLabel>
+                                        <Form.Control className="transparent_form fontsize14 h-45px" as="select" required value={uempid} onChange={e => setuempid(e.target.value)}>
+                                            <option value="">Select Employee</option>
+                                            {EmpData.EmpData_Array.map((val, index) => {
+                                                return (
+                                                    <option value={val.id} key={index}>{val.name}</option>
+                                                )
+                                            })}
+                                        </Form.Control>
+                                    </div>
+                                </div>
+                                <div className="col-xl-6 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Start Date</FormLabel>
+                                        <Form.Control className="transparent_form h-45px calc" id="start_date" type="date" required value={ustartdate} onChange={e => setustartdate(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-xl-6 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">End Date</FormLabel>
+                                        <Form.Control className="transparent_form h-45px calc" id="end_date" type="date" required value={uenddate} onChange={e => setuenddate(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Start Time</FormLabel>
+                                        <Form.Control className="transparent_form h-45px calc" id="start_time" type="time" required value={ustarttime} onChange={e => setustarttime(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">End Time</FormLabel>
+                                        <Form.Control className="transparent_form h-45px calc" id="end_time" type="time" required value={uendtime} onChange={e => setuendtime(e.target.value)} />
+                                    </div>
+                                </div>
+                                <div className="col-xl-4 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Total Hours</FormLabel>
+                                        <p className="m-0" id="total_time"></p>
+                                    </div>
+                                </div>
+                                <div className="col-xl-12 col-lg-12 mb-3">
+                                    <div className="form-group">
+                                        <FormLabel className="mb-2">Memo</FormLabel>
+                                        <Form.Control className="transparent_form h-45px" type="text" required value={umemo} onChange={e => setumemo(e.target.value)} />
+                                    </div>
+                                </div>
+                        </div>
+                </Modal.Body>
+                <Modal.Footer className="p-0">
+                    <Button variant="" className="w-100px graycolorbg fontsize14" onClick={() => setEditModal(false)}>Close</Button>
+                    <Button variant="" type="submit" className="w-100px btn_blue">Update</Button>
+                </Modal.Footer>
+                </Form>
+            </Modal>
         </>
     );
 }

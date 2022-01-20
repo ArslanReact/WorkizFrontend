@@ -74,6 +74,10 @@ const ProjectDashboard = () => {
         ]
     });
     let temp_state = { ...state };
+
+    const [Tasklist, setTasklist] = useState({
+        Tasklist_Array: []
+    });
     useEffect(() => {
         setLoading(true);
         axios.post(Globalsettings.url + 'api/admin/project-dashboard/'+companyid)
@@ -92,6 +96,7 @@ const ProjectDashboard = () => {
                 setStartDate(dateFormat(response.data.fromDate, 'yyyy-mm-dd'));
                 setEndDate(dateFormat(response.data.toDate, 'yyyy-mm-dd'));
                 setGraphDataSet(response.data.tasks_datasets);
+                setTasklist({ Tasklist_Array: response.data.taskslist ? response.data.taskslist : [], });
                 setLoading(false);
             });
     }, [])
@@ -210,28 +215,29 @@ const ProjectDashboard = () => {
                                         <thead>
                                             <tr>
                                                 <th scope="col">Tasks</th>
-                                                <th scope="col">Team</th>
-                                                <th scope="col">Open task</th>
+                                                <th scope="col">Due Date</th>
                                                 <th scope="col">Properity</th>
                                                 <th scope="col">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {TaskContentArray.map((val) => {
-                                                return (
-                                                    <TaskContent
-                                                        key={val.key}
-                                                        tdradiobtn={val.tdradiobtn}
-                                                        td1={val.td1}
-                                                        td2={val.td2}
-                                                        td3={val.td3}
-                                                        td4={val.td4}
-                                                        td5={val.td5}
-                                                        classNametdnth={val.classNametdnth}
-                                                        classNametexttdnth={val.classNametexttdnth}
-                                                    />
-                                                )
-                                            })}
+                                            {Tasklist.Tasklist_Array.length > 0 &&
+                                                Tasklist.Tasklist_Array.map((val) => {
+                                                    return (
+                                                        <TaskContent
+                                                            key={val.key}
+                                                            
+                                                            td1={val.heading}
+                                                            td2={val.td2}
+                                                            td3={val.due_on}
+                                                            td4={val.priority}
+                                                            td5={val.status}
+                                                            classNametdnth={val.classNametdnth}
+                                                            classtdnth={val.classNametexttdnth}
+                                                        />
+                                                    )
+                                                })
+                                            }
                                         </tbody>
                                     </table>
                                 </div>

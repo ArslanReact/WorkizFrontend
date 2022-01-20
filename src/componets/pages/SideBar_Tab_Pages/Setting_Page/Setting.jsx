@@ -175,7 +175,6 @@ const Setting = (props) => {
         data.append('longitude', longitude);
         axios.post(Globalsettings.url + 'api/admin/companysettings/update/' + companyid, data).then((response) => {
             toast.success("Company Settings Successfully Updated!");
-            localStorage.setItem("data", JSON.stringify(response.data.data.userDetail));
             setLoading(false);
             setTimeout(() => { 
                 window.location.reload();
@@ -208,6 +207,8 @@ const Setting = (props) => {
         data.append('address', profileadrress);
         data.append('image', selectedProfileImage);
         axios.post(Globalsettings.url + 'api/member/profile/'+companyid+'/'+ userid, data).then((response) => {
+            
+            localStorage.setItem("data", JSON.stringify(response.data.data.userDetail));
             toast.success("Profile Settings Successfully Updated!");
             setLoading(false);
             history.push(`${process.env.PUBLIC_URL}/setting`);

@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react';
-import Globalsettings from "../Globalsettings";
+import Globalsettings from "./Globalsettings";
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
 import { Badge } from "react-bootstrap";
 // img import
-import notificationimg from "../../assets/images/profileimg.jpg";
+import notificationimg from "../assets/images/profileimg.jpg";
 
-const EViewAllNotification = () => {
+const AViewAllNotification = () => {
     const [TableData, setTableData] = useState({
         TableData_Array: []
     });
@@ -16,9 +16,9 @@ const EViewAllNotification = () => {
     var userid = obj.id;
     
     useEffect(() => {
-        axios.get(Globalsettings.url + 'api/show-all-member-notifications/'+ companyid+'/'+userid)
+        axios.get(Globalsettings.url + 'api/show-all-admin-notifications/'+ companyid+'/'+userid)
             .then((response) => {
-                setTableData({ TableData_Array: response.data.data ? response.response.data.data : [], });
+                setTableData({ TableData_Array: response.data.html.unreadNotification ? response.data.html.unreadNotification : [], });
             })
     }, []); 
     return (
@@ -51,4 +51,4 @@ const EViewAllNotification = () => {
     )
 }
 
-export default EViewAllNotification;
+export default AViewAllNotification;

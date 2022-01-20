@@ -134,7 +134,7 @@ function EmployeeHeader(props) {
                                         <div className="text-center p-2">No Notification Yet!</div>
                                     }
                                 </div>
-                                <Dropdown.Item href={`${process.env.PUBLIC_URL}/viewallnotification`} className="p-2 text-center red_bg_color text-white sticky-bottom">View All Notifications</Dropdown.Item>
+                                <Dropdown.Item href={`${process.env.PUBLIC_URL}/eviewallnotification`} className="p-2 text-center red_bg_color text-white sticky-bottom">View All Notifications</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                         <Dropdown className="nav-items" autoClose="outside">

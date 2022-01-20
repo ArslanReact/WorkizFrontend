@@ -259,8 +259,8 @@ const TaskBoard = (props) => {
                                                 </div>
                                             </div>
                                             <div className="card-footer p-0 px-4 mt-4 pt-3 d-flex justify-content-between">
-                                                <NavLink to="#" className="d-flex align-items-center fontsize14"><img className="img-fluid mr-2" src={icon_18} alt="icon_18" /> {vals.comments.length}</NavLink>
-                                                <NavLink to="#" className="d-flex align-items-center fontsize14"><img className="img-fluid mr-2" src={icon_19} alt="icon_18" /> {vals.files.length}</NavLink>
+                                                {/* <NavLink to="#" className="d-flex align-items-center fontsize14"><img className="img-fluid mr-2" src={icon_18} alt="icon_18" /> {vals.comments.length}</NavLink>
+                                                <NavLink to="#" className="d-flex align-items-center fontsize14"><img className="img-fluid mr-2" src={icon_19} alt="icon_18" /> {vals.files.length}</NavLink> */}
                                                 <NavLink to="#" className="d-flex align-items-center fontsize14"><img className="img-fluid mr-2" src={icon_20} alt="icon_18" /> {(dateFormat(vals.due_date, 'yyyy-mm-dd'))}</NavLink>
                                             </div>
                                         </div>

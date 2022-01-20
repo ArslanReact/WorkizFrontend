@@ -2,9 +2,9 @@ import React, { useState, useEffect,useMemo } from 'react';
 import Globalsettings from "../../../../Globalsettings";
 import axios from 'axios';
 import { NavLink } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import LoadingOverlay from 'react-loading-overlay';
-
+import swal from 'sweetalert';
 import { TableHeader, Pagination, Search } from "../../../../datatable/DataTableCombo";
 import { exportTableToCSV } from '../../../../datatable/Exportcsv'; 
 
@@ -33,11 +33,11 @@ const RecurringInvoice = () => {
     // get company id from session
     let obj = JSON.parse(localStorage.getItem('data'));
     var companyid = obj.company_id;
-    var type = obj.user_other_role;
+    var userid = obj.id;
     useEffect(() => {
-        axios.get(Globalsettings.url + 'api/admin/finance/all-invoices/' + type + '/' + companyid)
+        axios.get(Globalsettings.url + 'api/admin/finance/invoice-recurring/' + companyid + '/' + userid)
             .then((response) => {
-                setInvoiveTableDataArray({ InvoiveTableData_Array: response.data.data ? response.data.data : [], });
+                setInvoiveTableDataArray({ InvoiveTableData_Array: response.data.data.RecurringInvoice ? response.data.data.RecurringInvoice : [], });
                 setLoading(false);
             })
             .catch((error) => {
@@ -47,9 +47,8 @@ const RecurringInvoice = () => {
 
     const headers = [
         { name: "ID", field: "id", sortable: true },
-        { name: "Invoice", field: "invoice_number", sortable: true },
+        { name: "Client", field: "invoice_number", sortable: true },
         { name: "Project", field: "project_name", sortable: true },
-        { name: "Client", field: "name", sortable: true },
         { name: "Total", field: "total", sortable: true },
         { name: "Invoice Date", field: "issue_date", sortable: true },
         { name: "Status", field: "status", sortable: true },
@@ -61,9 +60,9 @@ const RecurringInvoice = () => {
         if (search) {
             tabledata = tabledata.filter(
                 comment =>
-                    comment.invoice_number.toLowerCase().includes(search.toLowerCase()) ||
-                    comment.project_name.toLowerCase().includes(search.toLowerCase()) ||
-                    comment.name.toLowerCase().includes(search.toLowerCase()) ||
+                    
+                    comment.project.project_name.toLowerCase().includes(search.toLowerCase()) ||
+                    comment.project.client.name.toLowerCase().includes(search.toLowerCase()) ||
                     comment.total.toLowerCase().includes(search.toLowerCase()) 
             );
         }
@@ -85,14 +84,56 @@ const RecurringInvoice = () => {
             (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
         );
 
-    }, [InvoiveTableDataArray.InvoiveTableData_Array, currentPage, search, sorting]);        
+    }, [InvoiveTableDataArray.InvoiveTableData_Array, currentPage, search, sorting]);    
+       // Update Change Status
+       const Updatestatus = (id, s) => {
+        setLoading(true);
+        axios.post(Globalsettings.url + 'api/admin/finance/invoice-recurring/change-status', {
+            invoiceId: id,
+            status: s
+        })
+        .then(response => {
+
+            axios.get(Globalsettings.url + 'api/admin/finance/invoice-recurring/' + companyid + '/' + userid)
+            .then((response) => {
+                setInvoiveTableDataArray({ InvoiveTableData_Array: response.data.data.RecurringInvoice ? response.data.data.RecurringInvoice : [], });
+                toast.success("Expense Status Successfully Update!");
+                setLoading(false)
+            })
+        });
+    }      
+       // Update Lead Status
+       const DeleteInv = (id) => {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover the deleted recuring invoice data",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    axios.get(Globalsettings.url + 'api/admin/invoice-recurring/destroy/' + id)
+                        .then(response => {
+                            swal("Recuring Invoice Delete Successfully!", {
+                                icon: "success",
+                            });
+                            setInvoiveTableDataArray({ InvoiveTableData_Array: InvoiveTableDataArray.InvoiveTableData_Array.filter(item => item.id !== id) });
+                        });
+
+                } else {
+                }
+            });
+    }      
     return (
         <>
+            <ToastContainer />
+            <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <div className="container-fluid mb-4">
                 <div className="d-xl-flex d-block align-items-center">
                     <h4 className="main_title mb-3 mb-xl-0">Recurring Invoices</h4>
                     <div className="btn-group ml-auto">
-                        <NavLink to={`${process.env.PUBLIC_URL}/add_invoice`} className="btn btn_blue bg-white blackcolortext mr-2"><img className="img-fluid" src={plusblackicon} alt="" /> Create Add Recurring Invoice </NavLink>
+                        <NavLink to={`${process.env.PUBLIC_URL}/add_recuringinvoice`} className="btn btn_blue bg-white blackcolortext mr-2"><img className="img-fluid" src={plusblackicon} alt="" /> Create Add Recurring Invoice </NavLink>
                         <div className="btn-group ml-auto dropdown for_all">
                             <NavLink to="#" data-bs-toggle="dropdown" className="btn lightbluecolorbg whitecolortext fontsize14" data-toggle="dropdown"><img className="img-fluid" src={exporticon} alt="" /> Export </NavLink>
                             <ul className="dropdown-menu dropdown-menu-right">
@@ -105,40 +146,53 @@ const RecurringInvoice = () => {
             </div>
             {/*  */}
             <div className="container-fluid mb-4">
+                    <div className="card card_dashboard card-body">
+                        <div className="d-xl-flex d-block align-items-center">
+                            <div className="ml-auto">
+                                    <Search
+                                        onSearch={value => {
+                                            setSearch(value);
+                                            setCurrentPage(1);
+                                        }}
+                                    />
+                            </div>
+                        </div>
+                    </div>
                 <div className="table-sm-responsive data_table_profile">
                     <table className="table m-0">
-                        <thead className="thead-light">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Project</th>
-                                <th scope="col">Total</th>
-                                <th scope="col">Invoice Date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
+                        <TableHeader
+                            headers={headers}
+                            onSorting={(field, order) =>
+                                setSorting({ field, order })
+                            }
+                        />
                         <tbody>
-                            {RecuringDataTableLoop_Array.map((val) => {
+                        {FinalTableData.length > 0 ?  
+                                FinalTableData.map((val, index) => {
+                                    let number = index + 1;
+                                    counter2 = counter2+1;      
                                 return (
                                     <RecuringDataTableLoop
                                         key={val.key}
-                                        countnumber={val.countnumber}
-                                        projectname={val.projectname}
-                                        totaltext={val.totaltext}
-                                        clientname={val.clientname}
-                                        invoicedate={val.invoicedate}
+                                        invid={val.id}
+                                        countnumber={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
+                                        projectname={val.project.project_name}
+                                        totaltext={val.currency.currency_symbol+""+val.total}
+                                        clientname={val.project.client.name}
+                                        invoicedate={val.issue_date}
                                         status_color={val.status_color}
-                                        status_text={val.status_text}
-                                        down_arrow={val.down_arrow}
-                                        arrowdown={val.arrowdown}
-                                        iconimg={val.iconimg}
-                                        editiconimg={val.editiconimg}
-                                        viewiconimg={val.viewiconimg}
-                                        deleteiconimg={val.deleteiconimg}
+                                        status={val.status}
+
+                                        Updatestatus={Updatestatus}
+                                        DeleteInv={DeleteInv}
                                     />
                                 )
-                            })}
+                            })
+                            :
+                            <tr>
+                                <td colSpan="8" className="text-center">No Record Found</td>
+                            </tr>
+                        }       
                         </tbody>
                     </table>
                 </div>

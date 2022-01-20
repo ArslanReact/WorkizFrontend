@@ -148,7 +148,7 @@ function Header(props) {
                                         <div className="text-center p-2">No Notification Yet!</div>
                                     }
                                 </div>
-                                <Dropdown.Item href={`${process.env.PUBLIC_URL}/viewallnotification`} className="p-2 text-center red_bg_color text-white sticky-bottom">View All Notifications</Dropdown.Item>
+                                <Dropdown.Item href={`${process.env.PUBLIC_URL}/aviewallnotification`} className="p-2 text-center red_bg_color text-white sticky-bottom">View All Notifications</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                         <Dropdown className="nav-items" autoClose="outside">
@@ -249,7 +249,7 @@ function Header(props) {
                             {/*  */}
                             <li className="nav-items py-0"><NavLink to={`${process.env.PUBLIC_URL}/map`} className="px-3 mb-1 nav-link"><span className="img-icon mr-3"><img className="img-fluid" src={sidebar_map} alt="sidebar_map" /></span><span className="text-hidee">Map</span></NavLink></li>
                             <li className="nav-items py-0"><NavLink to={`${process.env.PUBLIC_URL}/setting`} className="px-3 nav-link"><span className="img-icon mr-3"><img className="img-fluid" src={sidebar_setting} alt="sidebar_setting" /></span><span className="text-hidee">Setting</span></NavLink></li>
-                            <li className="nav-itemss py-0 my-3"><NavLink to={`${process.env.PUBLIC_URL}/faq_admin`} className="border-radius-10 h-50px align-items-center d-flex justify-content-center w-100 px-3 btn btn_blue text-center"><span className="img-icon mr-3"><img className="img-fluid" src={sidebar_admin} alt="sidebar_admin" /></span><span className="text-hidee">FAQ Admin</span></NavLink></li>
+                            {/* <li className="nav-itemss py-0 my-3"><NavLink to={`${process.env.PUBLIC_URL}/faq_admin`} className="border-radius-10 h-50px align-items-center d-flex justify-content-center w-100 px-3 btn btn_blue text-center"><span className="img-icon mr-3"><img className="img-fluid" src={sidebar_admin} alt="sidebar_admin" /></span><span className="text-hidee">FAQ Admin</span></NavLink></li> */}
                         </Accordion>
                     </ul>
                 </Offcanvas.Body>
