@@ -38,37 +38,39 @@ function Header(props) {
         unread_notificationsarray_Array: []
     });
     // get company id from session
+    //
     useEffect(() => {
         if (localStorage.getItem("data") === null) {
-           
-        }else{
+        } else {
             document.title = "Admin Dashboard";
-        //     const interval = setInterval(() => {
-        //         let obj= JSON.parse(localStorage.getItem('data'));
-        //         if(obj === null){}else{
-        //             var companyid = obj.company_id;
-        //             var userid = obj.id;
-        //                 // axios.get(Globalsettings.url + 'api/admin/theme-settings/getsettingofadmintheme/' + companyid)
-        //                 //     .then((response) => {
-        //                 //         if(response.data.themename == 'custom'){
-        //                 //             $("#sidebar_dashboard").css("background",response.data.admintheme.sidebar_color);
-        //                 //             $(".accordion-button").attr("style", "background: "+response.data.admintheme.sidebar_color+" !important");
-        //                 //             $(".accordion-item").css("background",response.data.admintheme.sidebar_color);
-        //                 //             $(".accordion-body").css("background",response.data.admintheme.sidebar_color);
-        //                 //             $(".sidebar_dashboard .navbar.navbar_dashboard .accordion .show > .accordion-button:not(.collapsed), .sidebar_dashboard .navbar.navbar_dashboard .accordion .accordion-button:not(.collapsed)").css("background",response.data.admintheme.sidebar_color+"!important");
-        //                 //             $(".text-hidee").css("color",response.data.admintheme.sidebar_text_color);
-        //                 //         }
-        //                 //         // axios.get(Globalsettings.url + 'api/show-admin-notifications/'+ companyid+'/'+userid)
-        //                 //         // .then((response) => {
-        //                 //         //     setunreadNotificationCount(response.data.html.unreadNotificationCount);
-        //                 //         //     setunreadMessageCount(response.data.html.unreadMessageCount);
-        //                 //         // });
-        //                 // });
-
-        //         }
-        //   }, 10000);
-          //return () => clearInterval(interval);
+            let obj = JSON.parse(localStorage.getItem('data'));
+            var companyid = obj.company_id;
+            var userid = obj.id;
+            function getAlerts() {
+                axios.get(Globalsettings.url + 'api/admin/theme-settings/getsettingofadmintheme/' + companyid)
+                    .then((response) => {
+                        if(response.data.themename == 'custom'){
+                            $("#sidebar_dashboard").css("background",response.data.admintheme.sidebar_color);
+                            $(".accordion-button").attr("style", "background: "+response.data.admintheme.sidebar_color+" !important");
+                            $(".accordion-item").css("background",response.data.admintheme.sidebar_color);
+                            $(".accordion-body").css("background",response.data.admintheme.sidebar_color);
+                            $(".sidebar_dashboard .navbar.navbar_dashboard .accordion .show > .accordion-button:not(.collapsed), .sidebar_dashboard .navbar.navbar_dashboard .accordion .accordion-button:not(.collapsed)").css("background",response.data.admintheme.sidebar_color+"!important");
+                            $(".text-hidee").css("color",response.data.admintheme.sidebar_text_color);
+                        }
+                        axios.get(Globalsettings.url + 'api/show-admin-notifications/'+ companyid+'/'+userid)
+                        .then((response) => {
+                            setunreadNotificationCount(response.data.html.unreadNotificationCount);
+                            setunreadMessageCount(response.data.html.unreadMessageCount);
+                        });
+                });
+            }
+            getAlerts()
+            const interval = setInterval(() => getAlerts(), 6000)
+            return () => {
+              clearInterval(interval);
+            }
         }
+
     }, []);
 
     // larftbar canvas

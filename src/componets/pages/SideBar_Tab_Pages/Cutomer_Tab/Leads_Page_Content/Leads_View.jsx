@@ -98,10 +98,10 @@ const Leads_View = (props) => {
             <div className="full_page_tabs">
                 <Tabs>
                     <TabList className="react-tabs__tab-list d-flex justify-content-between">
-                        <Tab>Profile</Tab>
-                        <Tab>Proposal</Tab>
+                        <Tab>Details</Tab>
+                        {/* <Tab>Proposal</Tab>
                         <Tab>Files</Tab>
-                        <Tab>Follow Up</Tab>
+                        <Tab>Follow Up</Tab> */}
                     </TabList>
                     <TabPanel>
                         <div className="card card_dashboard card-body">
@@ -170,7 +170,7 @@ const Leads_View = (props) => {
                             </div>
                         </div>
                     </TabPanel>
-                    <TabPanel>
+                    {/* <TabPanel>
                         <div className="card card_dashboard card-body">
                             <div className="d-flex align-items-center">
                                 <h4 className="main_title"> Lead Proposal</h4>
@@ -178,7 +178,7 @@ const Leads_View = (props) => {
                                     <NavLink to={`${process.env.PUBLIC_URL}/add_proposal`} className="btn btn_blue mr-2"><img className="img-fluid" src={plusicon} alt="" /> Add Proposal Info</NavLink>
                                 </div>
                             </div>
-                            {/*  */}
+                         
                             <div className="d-flex align-items-center mb-4">
                                 <div className="ml-auto">
                                         <Search
@@ -189,7 +189,7 @@ const Leads_View = (props) => {
                                         />
                                 </div>
                             </div>
-                            {/*  */}
+                        
                             <div className="table-sm-responsive">
                                 <table className="table mb-0">
                                     <thead>
@@ -221,7 +221,7 @@ const Leads_View = (props) => {
                                         </div>
                                     </div>
                             </div>
-                            {/*  */}
+                         
                             <Tabs>
                                 <TabList className="react-tabs__tab-list d-flex justify-content-between">
                                     <Tab>Profile</Tab>
@@ -254,7 +254,7 @@ const Leads_View = (props) => {
                                     <NavLink onClick={() => setModalShowLeadAgent(true)} to="#" className="btn btn_blue ml-3"><img className="img-fluid" src={plusicon} alt="" /> Add New Folow Up</NavLink>
                                 </div>
                             </div>
-                            {/*  */}
+                       
                             <div className="table-sm-responsive">
                                 <div className="table table-borderless m-0">
                                     <thead>
@@ -268,7 +268,7 @@ const Leads_View = (props) => {
                                 </div>
                             </div>
                         </div>
-                    </TabPanel>
+                    </TabPanel> */}
                 </Tabs>
             </div>
             {/* task categor */}

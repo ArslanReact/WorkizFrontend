@@ -91,6 +91,7 @@ const AddNewNotice = (props) => {
                         <div className="form-group mb-4">
                             <FormLabel className="mb-2">Department</FormLabel>
                             <Form.Control className="transparent_form h-45px" as="select" value={departmentid} required onChange={e => setdepartmentid(e.target.value)}>
+                                <option value="">Select Department</option>
                                 {departments.departments_Array.map((val, index) => {
                                     return (
                                         <option value={val.id} key={index}>{val.team_name}</option>
@@ -122,10 +123,8 @@ const AddNewNotice = (props) => {
                         <div className="form-group mb-4">
                             <FormLabel className="mb-2">Attachment</FormLabel>
                             <div className="input-group col-xs-12">
-                                <Form.Control type="file" className="transparent_form fontsize14 h-45px" placeholder="Name" onChange={(e) => HandleFileSelected(e)} />
-                                <span className="input-group-btn">
-                                    <Button variant="" className="upload-field btn h-45px bodycolorbg ml-2" type="button"> Select Files</Button>
-                                </span>
+                                <Form.Control type="file" className="transparent_form fontsize14 " placeholder="Name" onChange={(e) => HandleFileSelected(e)} />
+                              
                             </div>
                         </div>
                         <div className="btn-group">

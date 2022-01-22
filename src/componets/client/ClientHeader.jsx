@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Globalsettings from "../Globalsettings";
 import axios from 'axios';
 import { withRouter, useHistory } from "react-router";
@@ -43,22 +43,31 @@ function ClientHeader(props) {
     const [unread_notificationsarray, setunread_notificationsarray] = useState({
         unread_notificationsarray_Array: []
     });
-    // get company id from session
-    if (localStorage.getItem("data") === null) {
-    } else {
-        document.title = "Client Dashboard";
-        let obj = JSON.parse(localStorage.getItem('data'));
-        var companyid = obj.company_id;
-        var userid = obj.id;
-        // axios.get(Globalsettings.url + 'api/show-client-notifications/' + companyid + '/' + userid)
-        // .then((response) => {
-        //     setunreadNotificationCount(response.data.html.unreadNotificationCount);
-        //     setunreadMessageCount(response.data.html.unreadMessageCount);
-        //     setunread_notificationsarray({ unread_notificationsarray_Array: response.data.html.user.unread_notifications ? response.data.html.user.unread_notifications : [], });
-        // });
-    }
+    //
+    useEffect(() => {
+        if (localStorage.getItem("data") === null) {
+        } else {
+            document.title = "Client Dashboard";
+            let obj = JSON.parse(localStorage.getItem('data'));
+            var companyid = obj.company_id;
+            var userid = obj.id;
+            function getAlerts() {
+                axios.get(Globalsettings.url + 'api/show-client-notifications/' + companyid + '/' + userid)
+                .then((response) => {
+                    setunreadNotificationCount(response.data.html.unreadNotificationCount);
+                    setunreadMessageCount(response.data.html.unreadMessageCount);
+                    setunread_notificationsarray({ unread_notificationsarray_Array: response.data.html.user.unread_notifications ? response.data.html.user.unread_notifications : [], });
+                });
+            }
+            getAlerts()
+            const interval = setInterval(() => getAlerts(), 6000)
+            return () => {
+              clearInterval(interval);
+            }
+        }
 
-    // 
+    }, [])
+
     const history = useHistory();
     if (props.location.pathname === `${process.env.PUBLIC_URL}/signin` || props.location.pathname === `${process.env.PUBLIC_URL}/error` || props.location.pathname === `${process.env.PUBLIC_URL}/signup` || props.location.pathname === `${process.env.PUBLIC_URL}/forgot`) {
         return false;

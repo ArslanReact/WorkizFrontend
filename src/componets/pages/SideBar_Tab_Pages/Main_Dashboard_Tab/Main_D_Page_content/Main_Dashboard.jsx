@@ -123,10 +123,6 @@ const Dashboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Recent Earnings</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-
-                                </div>
                             </div>
                             <div className="card-body px-4">
                                 <div className="chart-heigh-bar">
@@ -137,6 +133,9 @@ const Dashboard = () => {
                                             labels: GraphLebels,
                                             datasets: [
                                                 {
+                                                    barThickness: 15,
+                                                    maxBarThickness: 20,
+                                                    barPersentage: 1,
                                                     label: 'Earning',
                                                     data: GraphDataset,
                                                     borderColor: 'rgb(28, 166, 210)',
@@ -154,40 +153,33 @@ const Dashboard = () => {
                         <div className="card card_dashboard h-100">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Today</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                             
                             </div>
                             <div className="card-body px-2">
                                 <ul className="list-unstyled px-2 boxes-style">
                                     <li className="border_bodycolor_1 overflow-hidden mb-1">
-                                        <NavLink to="#" className="w-100 p-3 align-items-center d-flex">
+                                        <div className="w-100 p-3 align-items-center d-flex">
                                             <span className="mr-auto fontsize16 fontweightmeduim">Sales</span>
                                             <span className="fontsize24 fontweightmeduim">$200</span>
-                                        </NavLink>
+                                        </div>
                                     </li>
                                     <li className="border_bodycolor_1 overflow-hidden mb-1">
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="w-100 p-3 align-items-center d-flex">
+                                        <div className="w-100 p-3 align-items-center d-flex">
                                             <span className="mr-auto fontsize16 fontweightmeduim">Collected</span>
                                             <span className="fontsize24 fontweightmeduim">$22,000</span>
-                                        </NavLink>
+                                        </div>
                                     </li>
                                     <li className="border_bodycolor_1 overflow-hidden mb-1">
-                                        <NavLink to="#" className="w-100 p-3 align-items-center d-flex">
+                                        <div className="w-100 p-3 align-items-center d-flex">
                                             <span className="mr-auto fontsize16 fontweightmeduim">Jobs Done</span>
                                             <span className="fontsize24 fontweightmeduim">33</span>
-                                        </NavLink>
+                                        </div>
                                     </li>
                                     <li className="border_bodycolor_1 overflow-hidden mb-1">
-                                        <NavLink to="#" className="w-100 p-3 align-items-center d-flex">
+                                        <div className="w-100 p-3 align-items-center d-flex">
                                             <span className="mr-auto fontsize16 fontweightmeduim">Jobs Canceled</span>
                                             <span className="fontsize24 fontweightmeduim">2</span>
-                                        </NavLink>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>
@@ -226,14 +218,7 @@ const Dashboard = () => {
                         <div className="card card_dashboard h-100">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Jobs</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                         
                             </div>
                             <div className="card-body px-2">
                                 <ul className="list-unstyled px-2 boxes-style">
@@ -255,14 +240,7 @@ const Dashboard = () => {
                         <div className="card card_dashboard h-100">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Estimates</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                        
                             </div>
                             <div className="card-body px-2">
                                 <ul className="list-unstyled px-2 boxes-style2">
@@ -285,14 +263,7 @@ const Dashboard = () => {
                         <div className="card card_dashboard h-100">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Recent Activities</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                         
                             </div>
                             <div className="card-body px-2">
                                 <ul className="list-unstyled px-2 boxes-style3">
@@ -316,14 +287,7 @@ const Dashboard = () => {
                         <div className="card card_dashboard h-100">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Invoices</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                           
                             </div>
                             <div className="card-body px-2 d-block text-center align-items-center">
                                 

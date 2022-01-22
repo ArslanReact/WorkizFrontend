@@ -26,7 +26,7 @@ const LeadTable = (props) => {
         <>
             <tr>
                 <td>{props.countnumber}</td>
-                <td><NavLink to={`${process.env.PUBLIC_URL}/leads_view`}>{props.name}</NavLink><br /><span className="badge mt-2 d-inline-block badgebluecolor px-3 badgebluebg border-radius-100">{props.client_type}</span></td>
+                <td><NavLink to={`${process.env.PUBLIC_URL}/leads_view/`+props.leadid}>{props.name}</NavLink><br /><span className="badge mt-2 d-inline-block badgebluecolor px-3 badgebluebg border-radius-100">{props.client_type}</span></td>
                 <td>{props.company}</td>
                 <td>{props.value}</td>
                 <td>{props.created_at}</td>
