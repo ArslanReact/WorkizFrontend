@@ -140,6 +140,7 @@ const Invoice = () => {
                                         <InvoiveTableData
                                             key={index}
                                             countnumber={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
+                                            id={val.id}
                                             invoicenumber={val.invoice_number}
                                             projectname={val.project_name}
                                             client_avatar={val.client_avatar}

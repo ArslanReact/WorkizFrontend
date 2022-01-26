@@ -99,6 +99,7 @@ import Public_Grantt_Chart from "./componets/pages/SideBar_Tab_Pages/Project-Tab
 import Add_Job_Member from "./componets/pages/SideBar_Tab_Pages/Project-Tab/ManageJob_Page_content/Add_Job_Member";
 import Add_New_Template from "./componets/pages/SideBar_Tab_Pages/Project-Tab/ManageJob_Page_content/Add_New_Template";
 import Task_Edit_page from "./componets/pages/SideBar_Tab_Pages/Project-Tab/ManageJob_Page_content/Task_Edit_page";
+import View_adminprojectsubdetails from "./componets/pages/SideBar_Tab_Pages/Project-Tab/ManageJob_Page_content/View_adminprojectsubdetails";
 
 import Task from "./componets/pages/SideBar_Tab_Pages/Project-Tab/Task_Page_content/Task";
 import Add_New_Task from "./componets/pages/SideBar_Tab_Pages/Project-Tab/Task_Page_content/Add_New_Task";
@@ -257,6 +258,7 @@ import EmployeeDashboard from "./componets/employe/employeedashboardtab/Employee
 import EmployeeProject from "./componets/employe/employeeproject/EmployeeProject";
 import View_Projectdetails from "./componets/employe/employeeproject/View_Projectdetails";
 import View_projectsubdetails from "./componets/employe/employeeproject/View_projectsubdetails";
+
 import EmployeeTask from "./componets/employe/employetask/EmployeeTask";
 import Employee_AddNewTask from "./componets/employe/employetask/Employee_AddNewTask";
 import Employee_TaskEdit from "./componets/employe/employetask/Employee_TaskEdit";
@@ -401,6 +403,7 @@ function App() {
               <DashLayout path={`${process.env.PUBLIC_URL}/public_grantt_chart`} component={Public_Grantt_Chart} />
               <DashLayout path={`${process.env.PUBLIC_URL}/add_job_member`} component={Add_Job_Member} />
               <DashLayout path={`${process.env.PUBLIC_URL}/add_new_template`} component={Add_New_Template} />
+              <DashLayout path={`${process.env.PUBLIC_URL}/adminview_projectsubdetails/:id/:idd`} component={View_adminprojectsubdetails} />
               {/* ==========HR dromdown pages========== */}
               <DashLayout path={`${process.env.PUBLIC_URL}/hr-dashboard`} component={HrDasboard} />
               <DashLayout path={`${process.env.PUBLIC_URL}/employee-list`} component={EmployeeList} />
@@ -522,6 +525,7 @@ function App() {
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/employeeproject`} component={EmployeeProject}/>
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/view_projectdetails/:id`} component={View_Projectdetails} />
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/view_projectsubdetails/:id/:idd`} component={View_projectsubdetails} />
+              
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/employee_task`} component={EmployeeTask}/>
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/employee_add_new_task`} component={Employee_AddNewTask}/>
               <EmployeeDashLayout path={`${process.env.PUBLIC_URL}/employee_taskedit`} component={Employee_TaskEdit}/>

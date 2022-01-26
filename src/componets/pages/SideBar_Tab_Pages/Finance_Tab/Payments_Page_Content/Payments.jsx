@@ -176,8 +176,9 @@ const Payments = () => {
                                     counter2 = counter2+1;      
                                 return (
                                     <PaymentTableData
-                                        key={val.key}
+                                        key={index}
                                         paymentid={val.id}
+                                        project_id={val.project_id}
                                         count_number={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
                                         invoicenumber={val.invoice_id == null ? "--" : val.invoice.invoice_number}
                                         projectname={val.project.project_name}
@@ -226,6 +227,9 @@ const Payments = () => {
                                 </tr>
                                 <tr>
                                     <td colspan="3"><h6 className="mb-2 blackcolortext fontsize14">Remark</h6><span className="fontsize14 d-inline-block paragraphcolor1yext">{Edata.Edata_Array.length>0 && Edata.Edata_Array[0].remarks}</span></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><h6 className="mb-2 blackcolortext fontsize14">Receipt</h6><span><img width="280" src={Edata.Edata_Array.length>0 && Edata.Edata_Array[0].file_url} /></span></td>
                                 </tr>
                             </tbody>
                         </table>

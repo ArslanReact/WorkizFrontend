@@ -46,7 +46,7 @@ const JobLoop = (props) => {
                     </div>
                     <div className="d-flex align-items-center pb-4">
                         <div>
-                            <h4 className="mb-2"><NavLink to={`${process.env.PUBLIC_URL}/view_details`} className="fontsize22 mb-1 blackcolortext">{props.project_name}</NavLink></h4>
+                            <h4 className="mb-2"><NavLink to={`${process.env.PUBLIC_URL}/view_details/`+props.pid} className="fontsize22 mb-1 blackcolortext">{props.project_name}</NavLink></h4>
                             {users.length > 0 ?
                                 users.map((val) => {
                                     return (

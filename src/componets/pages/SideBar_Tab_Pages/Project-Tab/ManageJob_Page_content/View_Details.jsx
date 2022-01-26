@@ -696,6 +696,23 @@ const DeleteMilestone = (id) => {
             }
         });
 }  
+
+
+const[invoiceprefix,setinvoiceprefix] = useState('')
+const[invoicedigit,setinvoicedigit] = useState('')
+const[invoices,setinvoices] = useState({
+    invoices_Array:[]
+})
+const GetInvoices = () => {
+    setLoading(true);
+    axios.get(Globalsettings.url + 'api/admin/projects/invoicesbyproject/'+props.match.params.id+'/' + companyid+'/'+uid)
+    .then((response) => {
+        setinvoices({ invoices_Array: response.data.data.invoices[0].invoices ? response.data.data.invoices[0].invoices : [], });
+        setinvoiceprefix(response.data.data.invoiceSettings.invoice_prefix);
+        setinvoicedigit(response.data.data.invoiceSettings.invoice_digit);
+        setLoading(false);
+    });     
+}
     return (
         <>
             <ToastContainer/>
@@ -704,7 +721,7 @@ const DeleteMilestone = (id) => {
                 <div className="d-flex align-items-center">
                 <h4 className="main_title d-flex px-0 mb-3 mb-xl-0">Project # {projectno} <p className="ml-2 mb-0 fontweightbold blusecolortext">{projectname}</p></h4>
                     <div className="btn-group ml-auto dropdown for_all">
-                        <NavLink to="/add_payment" className="btn btn_blue mr-3"><img className="img-fluid mr-2" src={plusicon} alt="" /> Add Payment</NavLink>
+                        {/* <NavLink to="/add_payment" className="btn btn_blue mr-3"><img className="img-fluid mr-2" src={plusicon} alt="" /> Add Payment</NavLink> */}
                         <NavLink to="#" className="btn mr-3 bg-white blackcolortext btn_white fontsize14" data-bs-toggle="dropdown">{projectstatus} <img width="15" className="img-fluid ml-2" src={arrowdown} alt="" /> </NavLink>
                         <ul className="dropdown-menu dropdown-menu-right">
                             <NavLink to="#" onClick={(e) => updatestatus('in progress')} className="dropdown-item">In Progress <span className="px-2 ml-2 blusecolorbg border-radius-5">&nbsp;</span></NavLink>
@@ -728,7 +745,7 @@ const DeleteMilestone = (id) => {
                             <Tab  onClick={() => TaskDetails()}>Tasks</Tab>
                             <Tab onClick={() => FileDetails()}>Files</Tab>
                             <Tab onClick={() => TimeLogDetails()}>Time Logs</Tab>
-                            <Tab>Invoices</Tab>
+                            <Tab onClick={() => GetInvoices()} >Invoices</Tab>
                             <Tab onClick={() => DiscussionDetails()}>Discussion</Tab>
                             <Tab onClick={() => GanttChartDetails()}>Gantt Chart</Tab>
                         </TabList>
@@ -1297,25 +1314,32 @@ const DeleteMilestone = (id) => {
                                 <div className="d-flex align-items-center mb-4">
                                     <h4 className="main_title">Invoice</h4>
                                     <div className="btn-group ml-auto dropdown for_all">
-                                        <NavLink  to="#" className="btn btn_blue"><img className="img-fluid mr-2" src={plusicon} alt="" />Add Invoice</NavLink>
+                                        <NavLink  to={`${process.env.PUBLIC_URL}/add_invoice`} className="btn btn_blue"><img className="img-fluid mr-2" src={plusicon} alt="" />Add Invoice</NavLink>
                                     </div>
                                 </div>
                                 {/*  */}
                                 <div className="table-sm-responsive border_bodycolor_0 clent_data_table">
                                     <table className="table m-0 table-borderless">
                                         <tbody>
-                                            {InvoiceTabDataLoop_Array.map((val) => {
+                                            {invoices.invoices_Array.length > 0 ? 
+                                            invoices.invoices_Array.map((val) => {
                                                 return (
                                                     <InvoiceTabDataLoop
                                                         key={val.key}
-                                                        invoicename={val.invoicename}
-                                                        amount={val.amount}
-                                                        badgetext={val.badgetext}
+                                                        id={val.id}
+                                                        invoicename={invoiceprefix+'#'+invoicedigit+val.id}
+                                                        amount={val.total}
+                                                        badgetext={val.status}
                                                         badgebgcolor={val.badgebgcolor}
-                                                        time={val.time}
+                                                        time={val.issue_on}
                                                     />
                                                 )
-                                            })}
+                                            })
+                                            :
+                                            <tr>
+                                                <td class="text-center" colSpan={6}> No Invoice yet!</td>
+                                            </tr>
+                                        }
                                         </tbody>
                                     </table>
                                 </div>
@@ -1369,9 +1393,9 @@ const DeleteMilestone = (id) => {
                                                                     <div className="">
                                                                         <h4 className="mb-1">
                                                                             {val.project_id != null ?
-                                                                                <NavLink to={`${process.env.PUBLIC_URL}/view_projectsubdetails/`+val.project_id+"/"+val.id} class="text-dark">{val.title.toUpperCase()}</NavLink>
+                                                                                <NavLink to={`${process.env.PUBLIC_URL}/adminview_projectsubdetails/`+val.project_id+"/"+val.id} class="text-dark">{val.title.toUpperCase()}</NavLink>
                                                                             :
-                                                                                <NavLink to={`${process.env.PUBLIC_URL}/view_projectsubdetails/00/`+val.id} class="text-dark">{val.title.toUpperCase()}</NavLink>
+                                                                                <NavLink to={`${process.env.PUBLIC_URL}/adminview_projectsubdetails/00/`+val.id} class="text-dark">{val.title.toUpperCase()}</NavLink>
                                                                             }
                                                                         </h4>
                                                                         <p className="m-0 paragraphcolor1text fontsize14"><span className="text_decoration_none badge blusecolortext mr-2 badgebluebg">{val.last_reply_by_id != null ? val.last_reply_by.name.toUpperCase()+" replied at" : "Last replied at "} {dateFormat(val.last_reply_at,'dd-mm-yyyy hh:mm')}</span></p>

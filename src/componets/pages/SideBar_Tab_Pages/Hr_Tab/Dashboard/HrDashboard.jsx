@@ -177,14 +177,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Department Wise Employee </h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={download_icon} alt="download_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                            
                             </div>
                             <div className="card-body px-4">
                                 <div className="chart-height h-100">
@@ -217,14 +210,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Designation Wise Employee </h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={download_icon} alt="download_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                         
                             </div>
                             <div className="card-body px-4">
                                 <div className="chart-height h-100">
@@ -257,14 +243,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Gender Wise Employee  </h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={download_icon} alt="download_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                          
                             </div>
                             <div className="card-body px-4">
                                 <div className="chart-height h-100">
@@ -297,14 +276,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Role Wise Employee </h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={download_icon} alt="download_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                           
                             </div>
                             <div className="card-body px-4">
                                 <div className="chart-height h-100">
@@ -342,14 +314,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Leaves Taken</h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                          
                             </div>
                             <div className="card-body px-3">
                                 <div className="table-sm-responsive">
@@ -388,14 +353,7 @@ const HrDasboard = () => {
                         <div className="card card_dashboard">
                             <div className="card-header d-flex align-items-center p-2 p-lg-3">
                                 <h5 className="card-title fontsize20 blackcolortext mb-0">Late Attendance Mark </h5>
-                                <div className="ml-auto">
-                                    <NavLink to="#" className="mr-4"><img className="img-fluid" width="18" src={refresh_icon} alt="refresh_icon" /></NavLink>
-                                    <NavLink to="#" className="" role="button" data-toggle="dropdown"><img className="img-fluid" width="10" src={drop_icon} alt="drop_icon" /></NavLink>
-                                    <div className="dropdown-menu m-0 dropdown-menu-right">
-                                        {/* <NavLink to="#" className="dropdown-item fontsize14">Edit</NavLink> */}
-                                        <NavLink onClick={() => sweattest(true)} to="#" className="dropdown-item fontsize14">Delete</NavLink>
-                                    </div>
-                                </div>
+                            
                             </div>
                             <div className="card-body px-4">
                                 <div className="table-sm-responsive">
@@ -435,24 +393,3 @@ const HrDasboard = () => {
 }
 
 export default HrDasboard;
-
-
-// 
-function sweattest() {
-    swal({
-        title: "Are you sure?",
-        text: "You will not be able to recover the deleted recurring invoice!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-        .then((willDelete) => {
-            if (willDelete) {
-                swal("Poof! Your imaginary file has been deleted!", {
-                    icon: "success",
-                });
-            } else {
-                swal("Your imaginary file is safe!");
-            }
-        });
-}

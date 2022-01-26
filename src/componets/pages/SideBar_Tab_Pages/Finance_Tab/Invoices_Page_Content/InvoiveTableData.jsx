@@ -1,4 +1,5 @@
 import React from 'react';
+import Globalsettings from "../../../../Globalsettings";
 import DOMPurify from 'dompurify';
 import { Button, Form, FormLabel, Modal } from "react-bootstrap";
 
@@ -11,7 +12,7 @@ const InvoiveTableData = (props) => {
         <>
             <tr>
                 <td>{props.countnumber}</td>
-                {<td dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.invoicenumber) }} />}
+                <td>{<a href={Globalsettings.url+"api/all-invoices/download/"+props.id} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.invoicenumber) }} />}</td>
                 {<td dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(props.projectname) }} />}
                 <td className="">
                     <img className="img-fluid mr-3" src={props.client_avatar} alt="" />

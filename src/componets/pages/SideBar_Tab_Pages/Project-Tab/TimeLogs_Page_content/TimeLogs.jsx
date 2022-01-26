@@ -5,6 +5,7 @@ import { NavLink,useHistory } from 'react-router-dom';
 import { InputGroup, Button, Modal, Form, FormLabel, FormControl } from "react-bootstrap";
 import { TableHeader, Pagination, Search } from "../../../../datatable/DataTableCombo";
 // 
+import { exportTableToCSV } from '../../../../datatable/Exportcsv'; 
 import TimeLogTable from "../../Project-Tab/TimeLogs_Page_content/TimeLogTable";
 // 
 import plusblackicon from "../../../../../assets/images/plusblackicon.svg";
@@ -315,8 +316,8 @@ const TimeLogs = (props) => {
                         <div className="ml-auto dropdown for_all">
                             <NavLink to="#" data-bs-toggle="dropdown" data-toggle="dropdown" className="btn btn_blue lightbluecolorbg fontsize14"><img className="img-fluid mr-2" src={exporticon} alt="" /> Export </NavLink>
                             <ul className="dropdown-menu dropdown-menu-right">
-                                <NavLink to="#" className="dropdown-item"><img className="img-fluid mr-2" width="15" src={excel_file} alt="" />Excel</NavLink>
-                                <NavLink to="#" className="dropdown-item"><img className="img-fluid mr-2" width="15" src={csv_file} alt="" />CSV</NavLink>
+                                <NavLink onClick={() => exportTableToCSV('timelog.csv')} to="#" className="dropdown-item"><img className="img-fluid mr-2" width="15" src={excel_file} alt="" />Excel</NavLink>
+                                <NavLink onClick={() => exportTableToCSV('timelog.csv')} to="#" className="dropdown-item"><img className="img-fluid mr-2" width="15" src={csv_file} alt="" />CSV</NavLink>
                             </ul>
                         </div>
                     </div>

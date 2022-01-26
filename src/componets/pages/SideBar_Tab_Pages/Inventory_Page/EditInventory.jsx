@@ -67,7 +67,7 @@ const EditInventory = (props) => {
                 setproddescription(response.data.data.product.description);
                 setprodcat(response.data.data.product.category_id);
                 setprodsubcat(response.data.data.product.sub_category_id);
-                setprodtax(response.data.data.product.tax);
+                setprodtax(response.data.data.product.taxes);
                 if(response.data.data.product.allow_purchase == 1){
                     setprodpurchaseallow(true);
                 }
@@ -255,8 +255,8 @@ const EditInventory = (props) => {
                             <div className="col-xl-6 col-lg-12 mb-4">
                                 <Form.Group className="m-0">
                                     <Form.Label className="mb-2">Tax <NavLink onClick={() => handlemodalShowTaxShow(true)} to="#" className=""><img width="15" className="img-fluid ml-2" src={cogiconimg} alt="" /></NavLink></Form.Label>
-                                    <Form.Control required className="transparent_form h-50px" readOnly as="select" value={prodtax} onChange={e => setprodtax(e.target.value)}>
-                                        <option value="">Select Category</option>
+                                    <Form.Control required className="transparent_form h-50px"  as="select" value={prodtax} onChange={e => setprodtax(e.target.value)}>
+                                        <option value="">Select Tax</option>
                                         {ptax.ptax_Array.map((val) => {
                                             return (
                                                 <option value={val.id}>{val.tax_name}</option>

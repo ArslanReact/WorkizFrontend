@@ -21,8 +21,8 @@ const PaymentTableData = (props) => {
         <>
             <tr>
                 <td>{props.count_number}</td>
-                <td><NavLink onClick={() => ViewPayment(props.exid)} to="#" className="fontsize14 text_decoration_none blusecolortext">{props.invoicenumber}</NavLink></td>
-                <td><NavLink to={`${process.env.PUBLIC_URL}/view_details`} className="fontsize14 text_decoration_none blusecolortext">{props.projectname}</NavLink></td>
+                <td><NavLink onClick={() => ViewPayment(props.paymentid)} to="#" className="fontsize14 text_decoration_none blusecolortext">{props.invoicenumber}</NavLink></td>
+                <td><NavLink to={`${process.env.PUBLIC_URL}/view_details/`+props.project_id} className="fontsize14 text_decoration_none blusecolortext">{props.projectname}</NavLink></td>
                 <td>{props.amounttext}</td>
                 <td>{props.paidontext}</td>
                 <td>{props.dashes}</td>

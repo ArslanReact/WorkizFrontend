@@ -6,7 +6,7 @@ const FinanceReportTableLoop = (props) => {
         <>
             <tr>
                 <td>{props.countnumber}</td>
-                <td><NavLink to={`${process.env.PUBLIC_URL}/view_details`} className="">{props.projectname}</NavLink>{props.peojectname}</td>
+                <td><NavLink to={`${process.env.PUBLIC_URL}/view_details/`+props.project_id} className="">{props.projectname}</NavLink>{props.peojectname}</td>
                 <td>{props.invoicename}</td>
                 <td>{props.amount}</td>
                 <td>{props.paidon}</td>

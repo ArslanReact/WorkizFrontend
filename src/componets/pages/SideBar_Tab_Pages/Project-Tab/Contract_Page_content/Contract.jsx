@@ -62,8 +62,9 @@ const Contract = () => {
     // get company id from session
     let obj = JSON.parse(localStorage.getItem('data'));
     var companyid = obj.company_id;
+    var userid = obj.id;
     useEffect(() => {
-        axios.get(Globalsettings.url + 'api/admin/contracts/' + companyid)
+        axios.get(Globalsettings.url + 'api/admin/contracts/' + companyid+'/'+userid)
             .then((response) => {
                 temp_state.TopBoxesArray[0].topnumber = response.data.contractCounts;
                 temp_state.TopBoxesArray[1].topnumber = response.data.aboutToExpireCounts;

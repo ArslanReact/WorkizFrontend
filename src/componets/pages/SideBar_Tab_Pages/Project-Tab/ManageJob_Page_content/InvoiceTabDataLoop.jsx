@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from "react-router-dom";
-
+import Globalsettings from "../../../../Globalsettings";
 // 
 import downloadicon from "../../../../../assets/images/download_1_icon.svg";
 
@@ -15,7 +15,7 @@ const InvoiceTabDataLoop = (props) => {
                     <td>
                         <div className="d-flex align-items-center">
                             <p className="m-0 fontsize14 mr-3">{props.time}</p>
-                            <NavLink to="#" className="btn paragraphcolor3bg"><img className="img-fluid" src={downloadicon} alt="" /></NavLink>
+                            <a href={Globalsettings.url+"api/all-invoices/download/"+props.id} className="btn paragraphcolor3bg"><img className="img-fluid" src={downloadicon} alt="" /></a>
                         </div>
                     </td>
                 </tr>

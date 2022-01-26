@@ -1,4 +1,9 @@
-import React, {useState, useMemo} from 'react';
+import React, { useState, useEffect,useMemo } from 'react';
+import Globalsettings from "../../../../Globalsettings";
+import axios from 'axios';
+import { NavLink } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import LoadingOverlay from 'react-loading-overlay';
 import { Bar } from 'react-chartjs-2';
 import { TableHeader, Pagination, Search } from "../../../../datatable/DataTableCombo";
 // 
@@ -8,13 +13,35 @@ import FinanceReportTableLoop_Array from "../FinanceReport_Page_content/FinanceR
 // 
 
 const FinanceReport = () => {
+    var counter2 = -1;
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({ field: "", order: "" });
-
+    const [isLoading, setLoading] = useState(true);
     const ITEMS_PER_PAGE = 10;
-
+    const [TableDataArray, setTableDataArray] = useState({
+        TableData_Array: []
+    });
+    const [GlobalData, setGlobalData] = useState({
+        GlobalData_Array: []
+    });
+    // get company id from session
+    let obj = JSON.parse(localStorage.getItem('data'));
+    var companyid = obj.company_id;
+    var userid = obj.id;
+    useEffect(() => {
+        axios.get(Globalsettings.url + 'api/admin/reports/finance-report/' + companyid + '/' + userid)
+            .then((response) => {
+                setTableDataArray({ TableData_Array: response.data.data.reportdata ? response.data.data.reportdata : [], });
+                setGlobalData({ GlobalData_Array: response.data.data.global ? response.data.data.global : [], });
+                setLoading(false);
+            })
+        .catch((error) => {
+            setLoading(false);
+            toast.error("something went wrong!");
+        });
+    }, []) 
     const headers = [
         { name: "ID", field: "id", sortable: true },
         { name: "Project", field: "projectname", sortable: true },
@@ -25,7 +52,7 @@ const FinanceReport = () => {
         { name: "Remark", field: "remark", sortable: true }
     ];
     const FinalTableData = useMemo(() => {
-        let tabledata = FinanceReportTableLoop_Array;
+        let tabledata = TableDataArray.TableData_Array;
         // Searching
         if (search) {
             tabledata = tabledata.filter(
@@ -52,10 +79,11 @@ const FinanceReport = () => {
             (currentPage - 1) * ITEMS_PER_PAGE + ITEMS_PER_PAGE
         );
 
-    }, [FinanceReportTableLoop_Array, currentPage, search, sorting]);        
+    }, [TableDataArray.TableData_Array, currentPage, search, sorting]);        
     return (
         <>
-
+            <ToastContainer />
+            <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             {/* */}
             <div className="container-fluid mb-4">
                 <div className="card card_dashboard card-body">
@@ -81,27 +109,30 @@ const FinanceReport = () => {
                                     }
                                 />
                         <tbody>
-                        {FinalTableData.length > 0 ?
+                        {FinalTableData.length > 0 ?  
                                 FinalTableData.map((val, index) => {
+                                    let number = index + 1;
+                                    counter2 = counter2+1;      
                                 return (
                                     <FinanceReportTableLoop
                                         key={val.key}
-                                        countnumber={val.countnumber}
-                                        projectname={val.projectname}
-                                        invoicename={val.invoicename}
-                                        amount={val.amount}
-                                        paidon={val.paidon}
-                                        badgetext={val.badgetext}
+                                        project_id = {val.project_id}
+                                        countnumber={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
+                                        projectname={val.project.project_name}
+                                        invoicename={val.invoice_id == null ? "--" : val.invoice.invoice_number}
+                                        amount={val.currency.currency_symbol+""+val.amount}
+                                        paidon={val.paid_date}
+                                        badgetext={val.status}
                                         badgebgcolor={val.badgebgcolor}
-                                        remark={val.remark}
+                                        remark={val.remarks}
                                     />
                                 )
                             })
                             :
                             <tr>
-                                <td colSpan="7" className="text-center">No Record Found</td>
+                                <td colSpan="8" className="text-center">No Record Found</td>
                             </tr>
-                        }
+                        }   
                         </tbody>
                     </table>
                 </div>

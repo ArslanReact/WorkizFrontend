@@ -7,7 +7,7 @@ const TopBoxesLoop = (props) => {
                 <div className="card card_dashboard p-4">
                     <div className="d-flex align-items-center h-100">
                         <div className={"ellipse_circle " + props.classnth}><img className="img-fluid" width="24" src={props.iconimg} alt={props.altburger} /></div>
-                        <div className="ml-auto">
+                        <div className="ml-4">
                             <p className="m-0 lightgraycolortext">{props.toptitle}</p>
                             <h6 className="fontweightbold paragraphcolortext">{props.topnumber}</h6>
                         </div>
