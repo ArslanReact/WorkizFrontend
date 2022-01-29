@@ -222,6 +222,7 @@ import CDPR from "./componets/pages/SideBar_Tab_Pages/Setting_Page/CDPR";
 import CreateCurrency from "./componets/pages/SideBar_Tab_Pages/Setting_Page/CreateCurrency";
 import EditCurrency from "./componets/pages/SideBar_Tab_Pages/Setting_Page/EditCurrency";
 import FaqAdmin from "./componets/pages/SideBar_Tab_Pages/faqa_dmin/FaqAdmin";
+import EditFaqs from "./componets/pages/SideBar_Tab_Pages/faqa_dmin/EditFaqs";
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
  
@@ -495,6 +496,7 @@ function App() {
               <DashLayout path={`${process.env.PUBLIC_URL}/error`} component={Error} />
               <DashLayout path={`${process.env.PUBLIC_URL}/faq_admin`} component={FaqAdmin} />
               <DashLayout path={`${process.env.PUBLIC_URL}/aprofile/:id`} component={AProfile} />
+              <DashLayout path={`${process.env.PUBLIC_URL}/edit_faqs`} component={EditFaqs} />
 
               {/* ==========Client Dashboard pages========== */}
               <ClientDashLayout path={`${process.env.PUBLIC_URL}/clientdashboard`} component={ClientDashboard}/>

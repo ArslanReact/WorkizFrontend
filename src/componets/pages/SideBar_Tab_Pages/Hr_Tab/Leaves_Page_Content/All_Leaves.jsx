@@ -151,15 +151,6 @@ const All_Leaves = () => {
             <div className="container-fluid top-boxes mb-4">
                 <div className="card card_dashboard card-body">
                     <div className="d-xl-flex d-block align-items-center">
-                        <div className="d-flex align-items-center mb-3 mb-xl-0">
-                            <label className="w-100px blackcolortext fontsize16 fontweightregular">Show</label>
-                            <select className="form-control transparent_form">
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                            </select>
-                            <label className="w-100px ml-3 blackcolortext fontsize16 fontweightregular">Entries</label>
-                        </div>
                         <div className="ml-auto">
                                 <Search
                                     onSearch={value => {
