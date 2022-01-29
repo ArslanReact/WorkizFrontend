@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink,useHistory } from "react-router-dom";
 import { Button, Modal, Form } from "react-bootstrap";
 import Globalsettings from "../../../../Globalsettings";
 import axios from 'axios';
@@ -22,6 +22,7 @@ const Holiyday = (props) => {
     // get company id from session
     let obj = JSON.parse(localStorage.getItem('data'));
     var companyid = obj.company_id;
+    const history = useHistory();
     const [AddHoliday, setAddHoliday] = useState(false);
     const [date, setdate] = useState('');
     const [occasion, setoccasion] = useState('');
@@ -40,25 +41,27 @@ const Holiyday = (props) => {
             });
     },[])
     const handleSubmit = (evt) => {
+       
         axios.post(Globalsettings.url + 'api/admin/holidays/store', {
             date: date,
             occasion: occasion,
         })
-            .then((response) => {
-                toast.success("Holiday Successfully Updated!");
-                setAddHoliday(false)
-                axios.get(Globalsettings.url + 'api/admin/holidays/view-holiday/2022/' + companyid)
-                    .then((response) => {
-                        setHolidayData(response.data.view);
-                    });
-            })
-            .catch((error) => {
-            });
+        .then((response) => {
+            toast.success("Holiday Successfully Added!");
+            setAddHoliday(false)
+            setTimeout(() => { 
+                history.push(`${process.env.PUBLIC_URL}/holiyday`);
+            }, 3000)
+        })
+        .catch((error) => {
+            toast.error("Somthing Went Wrong!");
+        });
         evt.preventDefault();
     }
     return (
         <>
             <ToastContainer closeButton={true} position="top-right" />
+            <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <div className="container-fluid mb-4">
                 <div className="d-flex align-items-center">
                     <h4 className="main_title">Holiday List Of 2022</h4>
