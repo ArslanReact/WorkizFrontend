@@ -22,7 +22,7 @@ const All_Leaves = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [search, setSearch] = useState("");
     const [sorting, setSorting] = useState({ field: "", order: "" });
-
+    const [isLoading, setLoading] = useState(false);
     const ITEMS_PER_PAGE = 10;
     // get company id from session
     let obj = JSON.parse(localStorage.getItem('data'));

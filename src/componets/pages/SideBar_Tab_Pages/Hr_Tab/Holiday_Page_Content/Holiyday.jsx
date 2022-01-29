@@ -4,6 +4,7 @@ import { Button, Modal, Form } from "react-bootstrap";
 import Globalsettings from "../../../../Globalsettings";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import LoadingOverlay from 'react-loading-overlay';
 // 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "../../../../../../node_modules/react-tabs/style/react-tabs.css";
@@ -24,6 +25,7 @@ const Holiyday = (props) => {
     var companyid = obj.company_id;
     const history = useHistory();
     const [AddHoliday, setAddHoliday] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const [date, setdate] = useState('');
     const [occasion, setoccasion] = useState('');
     const [HolidayData, setHolidayData] = useState({
