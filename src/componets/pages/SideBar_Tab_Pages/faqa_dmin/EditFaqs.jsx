@@ -47,7 +47,7 @@ const EditFaqs = () => {
     }
     return (
         <>
-                    <ToastContainer closeButton={true} position="top-right" />
+            <ToastContainer closeButton={true} position="top-right" />
             <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <h5 className="mb-3 fontsize20 blackcolortext">Update Admin Faqs</h5>
             <Card className="card_dashboard">
