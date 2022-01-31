@@ -3,6 +3,8 @@ import Globalsettings from "../Globalsettings";
 import axios from 'axios';
 import { withRouter, useHistory } from "react-router";
 import { Form, Button, Offcanvas, NavItem,Dropdown } from "react-bootstrap";
+import { ToastContainer, toast } from 'react-toastify';
+import LoadingOverlay from 'react-loading-overlay';
 import { NavLink } from "react-router-dom";
 import searchimg from "../../assets/images/searchicon.svg";
 import chaticon from "../../assets/images/chaticon.svg";
@@ -28,9 +30,12 @@ import sidebar_message from "../../assets/images/sidebar_icon_message.svg";
 import sidebar_task from "../../assets/images/sidebar_icon_task.svg";
 import sidebar_finance from "../../assets/images/sidebar_icon_finance.svg";
 import arrowdown from "../../assets/images/arrowdown.svg";
-
+import $ from "jquery";
 function EmployeeHeader(props) {
     var userdata = JSON.parse(localStorage.getItem('data'));
+    const [isLoading, setLoading] = useState(false);
+    const [ip, setIP] = useState('');
+    const [address, setaddress] = useState('');
     // larftbar canvas
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -45,27 +50,86 @@ function EmployeeHeader(props) {
     const [unread_notificationsarray, setunread_notificationsarray] = useState({
         unread_notificationsarray_Array: []
     });
+    const [activetime, setactivetime] = useState({
+        activetime_Array: []
+    });
     //
     var userid;
+    var companyid;
+      //creating function to load ip address from the API
+    const getData = async () => {
+        const res = await axios.get('https://geolocation-db.com/json/')
+        console.log(res.data);
+        setIP(res.data.IPv4);
+        getAddress(res.data.latitude, res.data.longitude)
+    }
+    const getAddress = async (latitude, longitude) => {
+        const res = await axios.get('https://maps.googleapis.com/maps/api/geocode/json?' +
+        'latlng=' + latitude + ',' + longitude + '&key=AIzaSyDUFF3y2uMlHQm2JcKHXO6DGAWGrEJfHt4');
+        console.log('User\'s Address Data is ', res)
+        setaddress(res.data.results[0].formatted_address);
+    }
     useEffect(() => {
+        getData();
         if (localStorage.getItem("data") === null) {
         } else {
             document.title = "Employee Dashboard";
             let obj = JSON.parse(localStorage.getItem('data'));
-            var companyid = obj.company_id;
+            companyid = obj.company_id;
             userid = obj.id;
             function getAlerts() {
                 axios.get(Globalsettings.url + 'api/show-user-notifications/'+ companyid+'/'+userid)
                     .then((response) => {
                         setunreadNotificationCount(response.data.html.unreadNotificationCount);
                         setunreadMessageCount(response.data.html.unreadMessageCount);
+                        setactivetime({ activetime_Array: response.data.html.activetime ? response.data.html.activetime : [], });
                         setunread_notificationsarray({ unread_notificationsarray_Array: response.data.html.user.unread_notifications ? response.data.html.user.unread_notifications : [], });
                 });
             }
-            getAlerts()
+
+            var $worked = $("#active-timer");
+            function updateTimer() {
+                
+                var myTime = $worked.html();
+                if(myTime != undefined){
+                var ss = myTime.split(":");
+
+                var hours = ss[0];
+                var mins = ss[1];
+                var secs = ss[2];
+                secs = parseInt(secs)+1;
+
+                if(secs > 59){
+                    secs = '00';
+                    mins = parseInt(mins)+1;
+                }
+
+                if(mins > 59){
+                    secs = '00';
+                    mins = '00';
+                    hours = parseInt(hours)+1;
+                }
+
+                if(hours.toString().length < 2) {
+                    hours = '0'+hours;
+                }
+                if(mins.toString().length < 2) {
+                    mins = '0'+mins;
+                }
+                if(secs.toString().length < 2) {
+                    secs = '0'+secs;
+                }
+                var ts = hours+':'+mins+':'+secs;
+
+                $worked.html(ts);
+                }
+                
+            }
             const interval = setInterval(() => getAlerts(), 6000)
+            const interval2 = setInterval(() => updateTimer(), 1000)
             return () => {
               clearInterval(interval);
+              clearInterval(interval2);
             }
         }
 
@@ -85,8 +149,36 @@ function EmployeeHeader(props) {
     // const activetabHandler = (eventkeyid) => {
     //     localStorage.setItem('ative-tab', eventkeyid);
     // }
+    const starttime = () => {
+        let obj = JSON.parse(localStorage.getItem('data'));
+        setLoading(true);
+        const data = new FormData();
+        data.append('user_id', obj.id);
+        data.append('company_id', obj.company_id);
+        data.append('ip', ip);
+        data.append('address', address);
+        axios.post(Globalsettings.url + 'api/starttimer/'+ obj.company_id+'/'+obj.id, data).then((response) => {
+            toast.success("Timer Started Successfully!");
+            setLoading(false);
+        });
+    }
+    const stoptime = () => {
+        let obj = JSON.parse(localStorage.getItem('data'));
+        setLoading(true);
+        const data = new FormData();
+        data.append('user_id', obj.id);
+        data.append('company_id', obj.company_id);
+        data.append('ip', ip);
+        data.append('address', address);
+        axios.post(Globalsettings.url + 'api/stoptimer/'+ obj.company_id+'/'+obj.id, data).then((response) => {
+            toast.success("Timer Stop Successfully!");
+            setLoading(false);
+        });
+    }
     return (
         <>
+            <ToastContainer closeButton={true} position="top-right" />
+            <LoadingOverlay active={isLoading} spinner text='Please Wait...' />
             <div className="header header_dashboard navbar-expand-dashboard navbardashboard mb-4">
                 <nav className="navbar m-0 px-lg-0">
                     <Button variant="" className="offcanvas_btn" onClick={handleShow}><img className="img-fluid" src={affcanvas_arrow} alt="arrow" /></Button>
@@ -114,6 +206,20 @@ function EmployeeHeader(props) {
                     </div>
                     {/*  */}
                     <div className="list-unstyled d-lg-flex align-items-center header_button d-none">
+                        <span id="timer-section">     
+                            {activetime.activetime_Array.length > 0 ?
+                            <div class="nav navbar-top-links navbar-right pull-right m-t-10">
+                                <a class="btn btn_gray stop-timer-modal mr-lg-3" href="javascript:;" data-timer-id="{{ $timer->id }}">
+                                    <i class="ti-alarm-clock"></i>
+                                    <span id="active-timer">{activetime.activetime_Array[0].start_time}</span>
+                                    <label class="border-radius-100 ml-2 fontsize14 px-3 py-1 redcolortext badgeredbg" onClick={() => stoptime()}>Stop</label></a>
+                            </div>
+                            :
+                            <div class="nav navbar-top-links navbar-right pull-right m-t-10">
+                                <a class="btn btn_gray mr-lg-3" href="javascript:;" onClick={() => starttime()}>Start Timer <i class="fa fa-check-circle text-success"></i></a>
+                            </div>  
+                            } 
+                        </span>
                         <NavItem className="mr-2 mr-sm-4">
                             <NavLink to={`${process.env.PUBLIC_URL}/employee_message`} className="nav-link"><img className="img-fluid w-100" src={chaticon} alt="chaticon" /><span className="d-block noti_up lightredcolorbg">{unreadMessageCount}</span></NavLink>
                         </NavItem>

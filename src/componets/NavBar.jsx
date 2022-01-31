@@ -55,7 +55,7 @@ function Navbar(props) {
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/task`} className="nav-link"><span className="text-hidee">Task</span></NavLink></li>
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/task-board`} className="nav-link"><span className="text-hidee">Task Board</span></NavLink></li>
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/job-scheduling`} className="nav-link"><span className="text-hidee">Job Scheduling</span></NavLink></li>
-                                        <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/time-logs`} className="nav-link"><span className="text-hidee">Time Logs</span></NavLink></li>
+                                        
                                     </ul>
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -71,6 +71,7 @@ function Navbar(props) {
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/attendance`} className="nav-link"><span className="text-hidee">Attendance</span></NavLink></li>
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/holiyday`} className="nav-link"><span className="text-hidee">Holiyday</span></NavLink></li>
                                         <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/leaves`} className="nav-link"><span className="text-hidee">Leaves</span></NavLink></li>
+                                        <li className="nav-items"><NavLink to={`${process.env.PUBLIC_URL}/time-logs`} className="nav-link"><span className="text-hidee">Time Logs</span></NavLink></li>
                                     </ul>
                                 </Accordion.Body>
                             </Accordion.Item>

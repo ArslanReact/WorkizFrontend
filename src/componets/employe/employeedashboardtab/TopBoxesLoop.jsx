@@ -9,7 +9,7 @@ const TopBoxesLoop = (props) => {
                         <div className={"ellipse_circle " + props.color}><img className="img-fluid" width="24" src={props.iconimg} alt={props.altburger} /></div>
                         <div className="ml-auto">
                             <p className="m-0 lightgraycolortext">{props.toptitle}</p>
-                            <h6 className="fontweightbold paragraphcolortext">{props.topnumber}</h6>
+                            <h6 className="fontweightbold paragraphcolortext fontsize26">{props.topnumber}</h6>
                         </div>
                     </div>
                 </div>

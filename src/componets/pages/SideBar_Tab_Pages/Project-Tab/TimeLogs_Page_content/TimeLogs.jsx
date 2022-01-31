@@ -75,7 +75,7 @@ const TimeLogs = (props) => {
         axios.get(Globalsettings.url + 'api/admin/all-time-logs/' + companyid+'/'+uid)
             .then((response) => {
                 setLoading(false)
-                setTimeLogTable({ TimeLogTableArray: response.data.data.timelogs ? response.data.data.timelogs : [], });
+                setTimeLogTable({ TimeLogTableArray: response.data.data.membertimelogs ? response.data.data.membertimelogs : [], });
                 setCurrencyData(response.data.data.currencydata.currency_symbol);
             })
             .catch((error) => {
@@ -99,12 +99,10 @@ const TimeLogs = (props) => {
     }
     const headers = [
         { name: "#", field: "id", sortable: true },
-        { name: "Task", field: "project_name", sortable: true },
         { name: "Employees", field: "name", sortable: true },
         { name: "Start Time", field: "start_time", sortable: true },
         { name: "End Time", field: "end_time", sortable: false },
         { name: "Total Hours", field: "hours", sortable: false },
-        { name: "Eearnings", field: "earnings", sortable: false },
         { name: "Action", field: "action", sortable: false },
     ];
     const FinalTableData = useMemo(() => {
@@ -310,7 +308,7 @@ const TimeLogs = (props) => {
                     <div className="btn-group ml-auto dropdown for_all">
                         <NavLink to={`${process.env.PUBLIC_URL}/active_timer`} className="btn btn_blue whitecolorbg blackcolortext mr-3"><img className="img-fluid mr-2" src={watchicon} alt="" /> Active Timer</NavLink>
                         <NavLink to={`${process.env.PUBLIC_URL}/job-scheduling`} className="btn btn_blue whitecolorbg blackcolortext mr-3"><img className="img-fluid mr-2" src={calendaricon} alt="" /> Calendar View</NavLink>
-                        <NavLink to={`${process.env.PUBLIC_URL}/add_invoice`} className="btn btn_blue whitecolorbg blackcolortext mr-3"><img className="img-fluid mr-2" src={plusblackicon} alt="" /> Create Invoice</NavLink>
+                        {/* <NavLink to={`${process.env.PUBLIC_URL}/add_invoice`} className="btn btn_blue whitecolorbg blackcolortext mr-3"><img className="img-fluid mr-2" src={plusblackicon} alt="" /> Create Invoice</NavLink> */}
                         <NavLink to="#" onClick={() => addtimelog()} className="btn btn_blue whitecolorbg blackcolortext mr-3"><img className="img-fluid mr-2" src={watchicon} alt="" /> Log Time</NavLink>
                         
                         <div className="ml-auto dropdown for_all">
@@ -356,13 +354,12 @@ const TimeLogs = (props) => {
                                         key={index}
                                         timelogid={val.id}
                                         serialnumber={(currentPage*10 - 10)+parseInt(counter2)+parseInt(1)}
-                                        taskname={val.task.heading}
+                                     
                                         employetitle={val.name}
-                                        starttime={val.start_time}
-                                        enddate={val.end_time}
+                                        starttime={val.start_date+' '+val.start_time}
+                                        enddate={val.end_date+' '+val.end_time}
                                         status={val.status}
-                                        price={CurrencyData+""+val.total_hours * val.hourly_rate}
-                                        hrscount={val.hours}
+                                        hrscount={val.total_hours+'h '+val.total_minutes+' m'}
                                         DeleteTimeLog={DeleteTimeLog}
                                         ApproveTimeLog={ApproveTimeLog}
                                         EditTimeLog={EditTimeLog}
